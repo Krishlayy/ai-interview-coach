@@ -1,6 +1,11 @@
 # 🎯 AI Interview Coach
 
-A production-grade AI-powered interview preparation platform built with Streamlit and Llama 3.3-70B via Groq API.
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live_Demo-black?style=flat&logo=vercel)](https://ai-interview-coach-eight-xi.vercel.app)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-ai--interview--coach-blue?style=flat&logo=github)](https://github.com/Krishlayy/ai-interview-coach)
+
+> **Live Production Demo**: [https://ai-interview-coach-eight-xi.vercel.app](https://ai-interview-coach-eight-xi.vercel.app)
+
+A production-grade AI-powered interview preparation platform built with Python, Streamlit, and Llama 3.3-70B via Groq API.
 
 ---
 
