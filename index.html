@@ -3,221 +3,316 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Interview Coach — Live Interactive Platform</title>
+  <title>AI Interview Coach — Live Holographic Assessment Cockpit</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+    
     :root {
-      --bg-base: #020617;
-      --bg-surface: #0f172a;
-      --accent: #2563eb;
+      --bg: #030712;
+      --panel: #0b1329;
+      --cyan: #06b6d4;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
     }
+
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-base);
-      color: #f8fafc;
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: var(--bg);
+      color: #e2e8f0;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.06) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
     }
+
     .mono { font-family: 'JetBrains Mono', monospace; }
-    .glass {
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+
+    .hud-panel {
+      background: rgba(11, 19, 41, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
-    .glow-blue {
-      box-shadow: 0 0 40px -10px rgba(37, 99, 235, 0.35);
+
+    .hud-panel-glow {
+      box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.25);
     }
+
+    .corner-bracket {
+      position: relative;
+    }
+    .corner-bracket::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px;
+      width: 10px; height: 10px;
+      border-top: 2px solid #06b6d4;
+      border-left: 2px solid #06b6d4;
+    }
+    .corner-bracket::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; right: -1px;
+      width: 10px; height: 10px;
+      border-bottom: 2px solid #06b6d4;
+      border-right: 2px solid #06b6d4;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+<body class="min-h-screen flex flex-col selection:bg-cyan-500 selection:text-black">
 
-  <!-- Navigation -->
-  <header class="glass sticky top-0 z-30 px-6 py-4 border-b border-slate-800 flex items-center justify-between">
+  <!-- Top Cockpit Header -->
+  <header class="hud-panel sticky top-0 z-40 px-6 py-3.5 border-b border-cyan-500/20 flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/25">
-        <i class="fa-solid fa-bullseye text-lg"></i>
+      <div class="w-10 h-10 rounded-lg bg-cyan-950/80 border border-cyan-400/40 flex items-center justify-center text-cyan-400 shadow-lg shadow-cyan-500/20">
+        <i class="fa-solid fa-brain-circuit text-lg"></i>
       </div>
       <div>
-        <h1 class="text-lg font-bold text-white flex items-center gap-2">
-          AI Interview Coach
-          <span class="text-xs bg-blue-500/20 text-blue-400 font-mono px-2 py-0.5 rounded border border-blue-500/30">Vercel Live</span>
-        </h1>
-        <p class="text-xs text-slate-400">Contextual Mock Interviews · Voice & Speech Analysis · Instant Rubric Scoring</p>
+        <div class="flex items-center gap-2">
+          <h1 class="text-base font-bold text-white tracking-wider flex items-center gap-2">
+            AI INTERVIEW COACH <span class="text-[10px] mono bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded border border-cyan-400/30">HUD v3.0</span>
+          </h1>
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        </div>
+        <p class="text-[11px] mono text-cyan-400/70">REAL-TIME GEMINI 2.5 FLASH EVALUATION ENGINE</p>
       </div>
     </div>
+
+    <!-- Right Cockpit Controls -->
     <div class="flex items-center gap-3">
-      <a href="https://github.com/Krishlayy/ai-interview-coach" target="_blank" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-xs px-3.5 py-2 rounded-xl border border-slate-700 text-slate-200 transition">
+      <!-- Gemini Key Status Pill -->
+      <button onclick="toggleKeyModal()" class="flex items-center gap-2 bg-slate-900/90 hover:bg-slate-800 border border-cyan-500/30 px-3 py-1.5 rounded-lg text-xs mono transition">
+        <span class="w-2 h-2 rounded-full bg-emerald-400" id="apiKeyStatusDot"></span>
+        <span class="text-cyan-300" id="apiKeyStatusText">Gemini 2.5 Flash: Active</span>
+        <i class="fa-solid fa-key text-slate-400 text-[10px]"></i>
+      </button>
+
+      <a href="https://github.com/Krishlayy/ai-interview-coach" target="_blank" class="flex items-center gap-2 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs px-3.5 py-1.5 rounded-lg mono transition">
         <i class="fa-brands fa-github text-sm"></i>
-        <span>GitHub Repo</span>
+        <span class="hidden sm:inline">GitHub</span>
       </a>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="max-w-6xl w-full mx-auto px-6 pt-10 pb-6 text-center">
-    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-4">
-      <i class="fa-solid fa-sparkles"></i> Powered by Large Language Models & Speech Emotion Diagnostics
-    </div>
-    <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white max-w-3xl mx-auto leading-tight">
-      Ace Your Next Technical & Behavioral Interview
-    </h2>
-    <p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto mt-3">
-      Adaptive real-time interview simulator evaluating technical clarity, STAR structure, vocal pitch stability, and confidence metrics.
-    </p>
-  </section>
-
-  <!-- Interactive Simulator Grid -->
-  <main class="flex-1 max-w-6xl w-full mx-auto px-6 pb-12 grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <!-- Main Cockpit Grid -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-5">
     
-    <!-- Left Configuration & Question Panel (5 cols) -->
-    <div class="lg:col-span-5 space-y-5">
-      <div class="glass rounded-2xl p-6 space-y-5">
-        <h3 class="font-bold text-white text-base flex items-center gap-2">
-          <i class="fa-solid fa-sliders text-blue-400"></i>
-          Session Configuration
-        </h3>
+    <!-- Left Column: Session Configuration & Adaptive Briefing (4 cols) -->
+    <div class="lg:col-span-4 space-y-4">
+      
+      <!-- Session Parameters HUD -->
+      <div class="hud-panel corner-bracket rounded-xl p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-cyan-500/20 pb-3">
+          <h2 class="text-xs font-bold mono tracking-widest text-cyan-400 uppercase flex items-center gap-2">
+            <i class="fa-solid fa-sliders"></i> Session Directives
+          </h2>
+          <span class="text-[10px] mono text-slate-400">TELEMETRY ON</span>
+        </div>
 
-        <!-- Role Selector -->
         <div>
-          <label class="block text-xs font-medium text-slate-300 mb-2">Target Role</label>
-          <select id="roleSelect" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-blue-500">
-            <option value="Full Stack Engineer">Full Stack Engineer (Node + React / Python)</option>
-            <option value="Backend Architect">Backend & Distributed Systems Architect</option>
-            <option value="Machine Learning Engineer">Machine Learning / AI Engineer</option>
-            <option value="Embedded Systems / IoT">Embedded Systems & IoT Engineer</option>
-            <option value="Behavioral Leadership">Leadership & Behavioral (Amazon STAR)</option>
+          <label class="block text-[11px] mono text-slate-300 mb-1.5">TARGET ENGINEERING ROLE</label>
+          <select id="roleSelect" class="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-lg p-2.5 text-xs text-white mono outline-none">
+            <option value="Senior Full Stack Engineer (React, Node, Cloud Architecture)">Full Stack Engineer (React + Node.js)</option>
+            <option value="Distributed Systems & Backend Architect (Concurrency, Redis, Kafka)">Distributed Systems Architect</option>
+            <option value="AI / Machine Learning Engineer (RAG, Vector DBs, LLM Serving)">AI & Machine Learning Engineer</option>
+            <option value="Embedded Systems & IIoT Engineer (ESP32, MQTT, C++)">Embedded Systems & IIoT Engineer</option>
+            <option value="Engineering Manager / Behavioral (Amazon 16 Principles)">Leadership & Behavioral (Amazon STAR)</option>
           </select>
         </div>
 
-        <!-- Experience Level -->
         <div>
-          <label class="block text-xs font-medium text-slate-300 mb-2">Seniority Level</label>
-          <div class="grid grid-cols-3 gap-2">
-            <button type="button" onclick="setSeniority('Junior', this)" class="seniority-btn py-2 text-xs font-medium rounded-lg border border-slate-700 bg-slate-800/80 text-slate-300 hover:border-slate-500">Junior</button>
-            <button type="button" onclick="setSeniority('Mid-Level', this)" class="seniority-btn py-2 text-xs font-medium rounded-lg border border-blue-500/60 bg-blue-600/20 text-blue-400">Mid-Level</button>
-            <button type="button" onclick="setSeniority('Senior/Lead', this)" class="seniority-btn py-2 text-xs font-medium rounded-lg border border-slate-700 bg-slate-800/80 text-slate-300 hover:border-slate-500">Senior</button>
+          <label class="block text-[11px] mono text-slate-300 mb-1.5">SENIORITY BENCHMARK</label>
+          <div class="grid grid-cols-3 gap-2 mono text-xs">
+            <button type="button" onclick="setSeniority('Associate', this)" class="sen-btn py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 hover:text-white">Associate</button>
+            <button type="button" onclick="setSeniority('Senior', this)" class="sen-btn py-2 rounded-lg bg-cyan-500/20 border border-cyan-400 text-cyan-300 font-bold">Senior</button>
+            <button type="button" onclick="setSeniority('Staff / Principal', this)" class="sen-btn py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 hover:text-white">Principal</button>
           </div>
         </div>
 
-        <button onclick="generateQuestion()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold text-sm shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-          Generate Adaptive Question
+        <div>
+          <label class="block text-[11px] mono text-slate-300 mb-1.5">SPECIFIC FOCUS DOMAIN (OPTIONAL)</label>
+          <input type="text" id="topicFocus" placeholder="e.g. Concurrency locks, Zero-copy streams, RAG chunking" class="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-lg p-2.5 text-xs text-slate-200 mono outline-none placeholder-slate-600">
+        </div>
+
+        <!-- Optional Resume Snippet Paste -->
+        <div>
+          <label class="block text-[11px] mono text-slate-300 mb-1.5">RESUME CONTEXT (OPTIONAL)</label>
+          <textarea id="resumeInput" rows="2" placeholder="Paste skills or project bullets for hyper-personalized questions..." class="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-lg p-2 text-xs text-slate-200 mono outline-none placeholder-slate-600 resize-none"></textarea>
+        </div>
+
+        <button id="genBtn" onclick="generateRealQuestion()" class="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold mono text-xs tracking-wider uppercase shadow-lg shadow-cyan-600/30 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-microchip"></i>
+          <span>Ask Gemini To Generate Question</span>
         </button>
       </div>
 
-      <!-- Current Question Card -->
-      <div class="glass rounded-2xl p-6 space-y-3 relative overflow-hidden">
-        <div class="flex items-center justify-between text-xs text-slate-400">
-          <span class="font-mono text-blue-400 font-semibold" id="questionCategory">SYSTEM ARCHITECTURE</span>
-          <span id="questionTimer" class="font-mono bg-slate-800 px-2 py-0.5 rounded text-slate-300">Target: 3 min</span>
+      <!-- Live Voice Telemetry Waveform -->
+      <div class="hud-panel rounded-xl p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs mono text-cyan-400 flex items-center gap-2">
+            <i class="fa-solid fa-waveform-lines"></i> AUDIO SPECTRUM HUD
+          </span>
+          <span id="speechStatus" class="text-[10px] mono text-slate-400">MIC: STANDBY</span>
         </div>
-        <h4 id="questionTitle" class="text-base font-bold text-white leading-snug">
-          How would you design a scalable HTTP byte-range video streaming server to serve 100k concurrent viewers without memory exhaustion?
-        </h4>
-        <p id="questionHint" class="text-xs text-slate-400 border-l-2 border-blue-500 pl-3 py-0.5">
-          Focus on HTTP 206 responses, Chunked Content-Range headers, Node.js readable streams, and edge CDN distribution.
-        </p>
+        <canvas id="audioVisualizer" class="w-full h-16 rounded bg-slate-950/80 border border-slate-800"></canvas>
+        <div class="grid grid-cols-2 gap-2 text-center text-[10px] mono">
+          <div class="p-2 rounded bg-slate-900 border border-slate-800 text-slate-300">
+            PITCH STABILITY: <span class="text-emerald-400 font-bold" id="pitchScore">94%</span>
+          </div>
+          <div class="p-2 rounded bg-slate-900 border border-slate-800 text-slate-300">
+            SPEAKING PACE: <span class="text-cyan-400 font-bold" id="paceScore">135 WPM</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Right Answer & Analysis Panel (7 cols) -->
-    <div class="lg:col-span-7 space-y-5">
-      <!-- Input Mode Card -->
-      <div class="glass rounded-2xl p-6 space-y-4">
-        <div class="flex items-center justify-between">
-          <h3 class="font-bold text-white text-base flex items-center gap-2">
-            <i class="fa-solid fa-microphone-lines text-blue-400"></i>
-            Candidate Response
-          </h3>
+    <!-- Right Column: Interactive Question HUD, Speech Stage & Real AI Evaluation (8 cols) -->
+    <div class="lg:col-span-8 space-y-4">
+      
+      <!-- Dynamic Question Card -->
+      <div class="hud-panel corner-bracket rounded-xl p-6 space-y-3 hud-panel-glow relative overflow-hidden">
+        <div class="flex items-center justify-between text-xs mono border-b border-cyan-500/20 pb-3">
           <div class="flex items-center gap-2">
-            <button id="recordBtn" onclick="toggleRecording()" class="text-xs px-3 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 hover:bg-rose-500/20 transition flex items-center gap-1.5">
-              <i class="fa-solid fa-circle text-[9px] animate-pulse"></i>
-              <span id="recordLabel">Simulate Voice Mic</span>
+            <span class="px-2.5 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-400/30 font-bold" id="badgeCategory">SYSTEM ARCHITECTURE</span>
+            <span class="text-slate-400" id="badgeSeniority">SENIOR BENCHMARK</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-amber-400">
+            <i class="fa-solid fa-clock"></i>
+            <span id="timerDisplay">TARGET: 3m 30s</span>
+          </div>
+        </div>
+
+        <h3 id="questionHeading" class="text-lg sm:text-xl font-bold text-white leading-relaxed">
+          How would you design a scalable HTTP 206 byte-range video streaming microservice handling 100,000 concurrent viewers without exhausting server RAM or saturating disk I/O?
+        </h3>
+        
+        <div id="questionCriteria" class="text-xs text-slate-400 font-mono bg-slate-950/60 p-3 rounded-lg border border-slate-800 flex items-start gap-2">
+          <i class="fa-solid fa-compass text-cyan-400 mt-0.5"></i>
+          <span id="criteriaText">Evaluation criteria: Chunked stream pipelines, Content-Range headers, memory profiling, and CDN edge caching strategies.</span>
+        </div>
+      </div>
+
+      <!-- Candidate Response Area -->
+      <div class="hud-panel rounded-xl p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <h4 class="text-xs font-bold mono text-cyan-400 uppercase flex items-center gap-1.5">
+              <i class="fa-solid fa-microphone-lines"></i> Candidate Argument
+            </h4>
+            <span id="transcriptionPill" class="hidden text-[10px] mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/40 animate-pulse">
+              LIVE TRANSCRIBING...
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button id="micBtn" onclick="toggleMicrophone()" class="px-3.5 py-1.5 rounded-lg bg-rose-600/20 hover:bg-rose-600/30 border border-rose-500/40 text-rose-300 text-xs mono transition flex items-center gap-2">
+              <i class="fa-solid fa-microphone" id="micIcon"></i>
+              <span id="micLabel">Start Voice Mic</span>
             </button>
-            <button onclick="fillSampleResponse()" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 transition">
-              Use Exemplar Answer
+            <button onclick="fillStaffExemplar()" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-xs mono transition">
+              Load Senior Sample
             </button>
           </div>
         </div>
 
-        <textarea id="answerInput" rows="6" placeholder="Type your structured answer here (or click 'Use Exemplar Answer' / 'Simulate Voice Mic')..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 resize-none font-mono"></textarea>
+        <textarea id="candidateAnswer" rows="6" placeholder="Speak into your microphone or type your complete technical response here... Real Gemini AI will parse your exact words." class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-400 rounded-xl p-4 text-xs sm:text-sm text-slate-100 mono leading-relaxed outline-none resize-none placeholder-slate-600"></textarea>
 
         <div class="flex items-center justify-between pt-1">
-          <span class="text-xs text-slate-500" id="wordCount">0 words</span>
-          <button onclick="evaluateAnswer()" class="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white rounded-xl font-bold text-sm shadow-lg shadow-emerald-500/20 transition flex items-center gap-2">
-            <i class="fa-solid fa-chart-line"></i>
-            Run AI Rubric Evaluation
+          <span class="text-xs mono text-slate-500" id="candidateWordCount">0 words</span>
+          <button id="evalBtn" onclick="evaluateWithGemini()" class="px-6 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold mono text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/30 transition flex items-center gap-2">
+            <i class="fa-solid fa-gauge-high"></i>
+            <span>Run Real Gemini Evaluation</span>
           </button>
         </div>
       </div>
 
-      <!-- AI Evaluation Results Card -->
-      <div id="resultsCard" class="glass rounded-2xl p-6 space-y-5 glow-blue">
+      <!-- Real AI Evaluation Results Section -->
+      <div id="evalSection" class="hidden hud-panel corner-bracket rounded-xl p-6 space-y-5 border-emerald-500/30">
         <div class="flex items-center justify-between border-b border-slate-800 pb-4">
           <div>
-            <h4 class="text-base font-bold text-white flex items-center gap-2">
-              <i class="fa-solid fa-award text-amber-400"></i>
-              Rubric Assessment & Score Breakdown
-            </h4>
-            <p class="text-xs text-slate-400">Benchmark comparison based on 10,000+ senior engineering interviews</p>
+            <div class="flex items-center gap-2">
+              <span class="text-xs mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">GEMINI 2.5 FLASH VERDICT</span>
+              <span class="text-xs text-slate-400 mono" id="evalTimestamp">--</span>
+            </div>
+            <h4 class="text-base font-bold text-white mt-1">Multi-Dimensional Rubric Performance</h4>
           </div>
           <div class="text-right">
-            <div class="text-2xl font-black text-emerald-400 font-mono" id="overallScore">94 / 100</div>
-            <div class="text-[10px] text-slate-400 uppercase tracking-widest font-mono">Top 5% Tier</div>
+            <div class="text-3xl font-black text-emerald-400 mono" id="resOverallScore">92<span class="text-base text-slate-400">/100</span></div>
+            <div class="text-[10px] mono text-emerald-400/80 uppercase tracking-widest" id="resTier">Strong Hire Candidate</div>
           </div>
         </div>
 
-        <!-- Metrics Bars -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
-            <div class="flex justify-between text-xs text-slate-400 mb-1">
-              <span>Technical Accuracy</span>
-              <span class="font-mono text-emerald-400 font-semibold" id="techScore">96%</span>
+        <!-- 3 Quantitative Score Bars -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mono text-xs">
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1.5">
+            <div class="flex justify-between text-slate-400">
+              <span>Technical Depth</span>
+              <span class="text-cyan-400 font-bold" id="resTechScore">94%</span>
             </div>
-            <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-              <div id="techBar" class="h-full bg-emerald-500 rounded-full" style="width: 96%"></div>
-            </div>
-          </div>
-
-          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
-            <div class="flex justify-between text-xs text-slate-400 mb-1">
-              <span>STAR Structure & Clarity</span>
-              <span class="font-mono text-blue-400 font-semibold" id="starScore">92%</span>
-            </div>
-            <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-              <div id="starBar" class="h-full bg-blue-500 rounded-full" style="width: 92%"></div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div id="barTech" class="h-full bg-cyan-400 rounded-full" style="width: 94%"></div>
             </div>
           </div>
 
-          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
-            <div class="flex justify-between text-xs text-slate-400 mb-1">
-              <span>Delivery & Confidence</span>
-              <span class="font-mono text-indigo-400 font-semibold" id="confScore">90%</span>
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1.5">
+            <div class="flex justify-between text-slate-400">
+              <span>STAR Structure</span>
+              <span class="text-emerald-400 font-bold" id="resStarScore">90%</span>
             </div>
-            <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-              <div id="confBar" class="h-full bg-indigo-500 rounded-full" style="width: 90%"></div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div id="barStar" class="h-full bg-emerald-400 rounded-full" style="width: 90%"></div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1.5">
+            <div class="flex justify-between text-slate-400">
+              <span>Clarity & Edge Cases</span>
+              <span class="text-indigo-400 font-bold" id="resClarityScore">88%</span>
+            </div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div id="barClarity" class="h-full bg-indigo-400 rounded-full" style="width: 88%"></div>
             </div>
           </div>
         </div>
 
-        <!-- Qualitative Strengths & Improvement Points -->
-        <div class="space-y-3 pt-1">
-          <div class="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/20 text-xs">
-            <div class="font-bold text-emerald-300 flex items-center gap-1.5 mb-1">
-              <i class="fa-solid fa-circle-check"></i> Key Strengths
+        <!-- Qualitative Strengths & Critical Improvements from Gemini -->
+        <div class="space-y-3 pt-2">
+          <div class="p-4 rounded-lg bg-emerald-950/20 border border-emerald-500/30 text-xs">
+            <div class="font-bold text-emerald-400 mono flex items-center gap-2 mb-2">
+              <i class="fa-solid fa-circle-check"></i> VERIFIED STRENGTHS
             </div>
-            <p id="strengthsText" class="text-slate-300 leading-relaxed">
-              Excellent identification of fs.createReadStream with { start, end } byte slices to bypass RAM bottlenecks. Clear handling of HTTP 206 Partial Content headers and client seek ranges.
-            </p>
+            <ul id="resStrengths" class="space-y-1.5 text-slate-300 list-disc pl-4">
+              <!-- Dynamically populated by Gemini -->
+            </ul>
           </div>
 
-          <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-500/20 text-xs">
-            <div class="font-bold text-amber-300 flex items-center gap-1.5 mb-1">
-              <i class="fa-solid fa-triangle-exclamation"></i> Growth Opportunity
+          <div class="p-4 rounded-lg bg-amber-950/20 border border-amber-500/30 text-xs">
+            <div class="font-bold text-amber-400 mono flex items-center gap-2 mb-2">
+              <i class="fa-solid fa-triangle-exclamation"></i> GAPS & ARCHITECTURAL SUGGESTIONS
             </div>
-            <p id="growthText" class="text-slate-300 leading-relaxed">
-              Could deepen the answer by mentioning multi-bitrate HLS (HTTP Live Streaming) adaptive transcoding and CDN edge cache keys for sub-segment caching.
+            <ul id="resImprovements" class="space-y-1.5 text-slate-300 list-disc pl-4">
+              <!-- Dynamically populated by Gemini -->
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-lg bg-cyan-950/20 border border-cyan-500/30 text-xs">
+            <div class="font-bold text-cyan-400 mono flex items-center gap-2 mb-1.5">
+              <i class="fa-solid fa-lightbulb"></i> HOW A PRINCIPAL ENGINEER WOULD SYNTHESIZE THIS:
+            </div>
+            <p id="resExemplar" class="text-slate-300 leading-relaxed font-mono">
+              <!-- Dynamically populated by Gemini -->
             </p>
           </div>
         </div>
@@ -225,153 +320,390 @@
     </div>
   </main>
 
-  <!-- Technical Spec Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950 py-6 px-6 text-center text-xs text-slate-500">
-    <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      <p>AI Interview Coach · Engineered by <strong class="text-slate-300 font-semibold">Kishalay Sharma</strong></p>
-      <div class="flex items-center gap-6">
-        <a href="https://github.com/Krishlayy/ai-interview-coach" class="hover:text-blue-400 transition">GitHub Codebase</a>
-        <a href="https://github.com/Krishlayy" class="hover:text-blue-400 transition">GitHub Profile</a>
+  <!-- API Key Modal Drawer -->
+  <div id="apiKeyModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="hud-panel corner-bracket rounded-2xl max-w-lg w-full p-6 space-y-4 border-cyan-400/40">
+      <div class="flex items-center justify-between border-b border-cyan-500/20 pb-3">
+        <h3 class="text-sm font-bold mono text-cyan-400 flex items-center gap-2">
+          <i class="fa-solid fa-key"></i> GEMINI API KEY CONFIGURATION
+        </h3>
+        <button onclick="toggleKeyModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
+
+      <p class="text-xs text-slate-300 leading-relaxed">
+        This application uses Google Gemini 2.5 Flash for live question generation and semantic rubric evaluation. Your key is stored strictly in your browser session (<code class="text-cyan-400 mono">localStorage</code>).
+      </p>
+
+      <div>
+        <label class="block text-[11px] mono text-slate-400 mb-1">GOOGLE GEMINI API KEY</label>
+        <input type="password" id="geminiKeyInput" class="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-lg p-2.5 text-xs text-cyan-300 mono outline-none">
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <button onclick="testKeyInModal()" class="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs mono text-slate-300">
+          Test Connection
+        </button>
+        <button onclick="saveKeyFromModal()" class="px-5 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs mono">
+          Save & Apply
+        </button>
+      </div>
+      <div id="modalTestMsg" class="text-[11px] mono text-slate-400"></div>
     </div>
-  </footer>
+  </div>
 
   <script>
-    let currentSeniority = 'Mid-Level';
-    const questionsDatabase = {
-      'Full Stack Engineer': [
-        {
-          category: 'SYSTEM ARCHITECTURE',
-          timer: 'Target: 3 min',
-          title: 'How would you design a scalable HTTP byte-range video streaming server to serve 100k concurrent viewers without memory exhaustion?',
-          hint: 'Focus on HTTP 206 responses, Chunked Content-Range headers, Node.js readable streams, and edge CDN distribution.',
-          exemplar: 'To serve 100k concurrent viewers without memory exhaustion, we must never buffer full media files into RAM. Using Node.js, we parse the client\'s `Range` header (e.g. `bytes=0-1048575`), calculate the start and end offsets, and invoke `fs.createReadStream(path, { start, end })`. We return an HTTP 206 Partial Content status with `Content-Range: bytes ${start}-${end}/${totalSize}` and pipe the chunk stream directly into `res`. At scale, this is distributed across Kubernetes pods fronted by Cloudflare CDN caching popular initial 2MB chunks.'
-        },
-        {
-          category: 'DATABASE & CONCURRENCY',
-          timer: 'Target: 4 min',
-          title: 'Explain how you prevent race conditions during inventory checkout in high-concurrency e-commerce events (e.g. Flash Sales)?',
-          hint: 'Discuss pessimistic locking vs. optimistic locking (versioning) and distributed locks in Redis.',
-          exemplar: 'In high-concurrency flash sales, standard read-then-update queries cause double-allocation. I address this using two strategies: 1) Atomic DB increments with conditions (`UPDATE products SET stock = stock - 1 WHERE id = ? AND stock > 0`) or 2) Redis-based distributed atomic token buckets (`DECRBY`) executing in O(1) time before persisting finalized orders to PostgreSQL via asynchronous message queues (RabbitMQ/Kafka).'
-        }
-      ],
-      'Backend Architect': [
-        {
-          category: 'DISTRIBUTED SYSTEMS',
-          timer: 'Target: 5 min',
-          title: 'How do you guarantee idempotency in distributed microservice payment workflows?',
-          hint: 'Focus on Idempotency Keys, distributed deduplication caches, and database state machines.',
-          exemplar: 'We require clients to send a unique `Idempotency-Key` header with each mutating request. In our API Gateway, we check Redis with an atomic `SET NX` command. If the key exists with an IN_PROGRESS status, we return HTTP 409 or hold until completion. Once the transaction completes in PostgreSQL within a strict ACID transaction, the cached response is persisted for 24 hours so identical retries return the original receipt without double-charging.'
-        }
-      ],
-      'Machine Learning Engineer': [
-        {
-          category: 'RETRIEVAL-AUGMENTED GENERATION',
-          timer: 'Target: 4 min',
-          title: 'How do you mitigate hallucinations in enterprise RAG systems when querying unstructured documents?',
-          hint: 'Discuss semantic chunking, reciprocal rank fusion, strict citation grounding, and confidence thresholds.',
-          exemplar: 'Hallucination mitigation requires strict grounding at both indexing and synthesis stages. We use semantic chunking with overlap (500 tokens, 50 token overlap) and generate dense embeddings via sentence-transformers stored in ChromaDB. During inference, we retrieve top-k chunks, perform cross-encoder re-ranking, and enforce a strict system prompt: "Only answer using the context provided below. If the answer is not present, reply with \'Insufficient information\' and provide chunk citations."'
-        }
-      ],
-      'Embedded Systems / IoT': [
-        {
-          category: 'IIOT & EDGE COMPUTING',
-          timer: 'Target: 4 min',
-          title: 'How do you design an edge telemetry pipeline on ESP32 to transmit multi-sensor data reliably over intermittent Wi-Fi / Cellular?',
-          hint: 'Discuss FreeRTOS queue buffering, MQTT QoS 1 with persistent sessions, and local SPIFFS flash logging.',
-          exemplar: 'On the ESP32 micro-controller, we decouple sensor acquisition from network transmission using FreeRTOS tasks and ring buffers. Telemetry samples are pushed to an in-memory queue. If network drops occur, samples are written to SPIFFS flash. The MQTT client uses QoS 1 with CleanSession=0. Upon reconnection, backlogged telemetry is sequentially flushed in micro-batches before resuming live streaming.'
-        }
-      ],
-      'Behavioral Leadership': [
-        {
-          category: 'AMAZON LEADERSHIP PRINCIPLE: OWNERSHIP',
-          timer: 'Target: 3 min',
-          title: 'Tell me about a time you had to make a critical technical decision with incomplete data under tight project deadlines.',
-          hint: 'Structure using Situation, Task, Action, Result (STAR).',
-          exemplar: 'Situation: Two weeks before our quarterly platform launch, our primary third-party analytics API began timing out under load. Task: As lead engineer, I had to ensure our service remained resilient without delaying the product launch. Action: I built an asynchronous fallback queue using Redis BullMQ to buffer telemetry events locally, allowing the core user journey to complete in <150ms while syncing analytics in the background once the provider stabilized. Result: We launched on schedule with 99.98% uptime and zero dropped customer actions.'
-        }
-      ]
-    };
+    // Global State
+    let activeKey = localStorage.getItem("GEMINI_KEY") || "";
+    let currentSeniority = "Senior";
+    let recognition = null;
+    let isListening = false;
+    let audioContext = null;
+    let analyser = null;
+    let animId = null;
 
-    function setSeniority(level, btn) {
-      currentSeniority = level;
-      document.querySelectorAll('.seniority-btn').forEach(b => {
-        b.className = 'seniority-btn py-2 text-xs font-medium rounded-lg border border-slate-700 bg-slate-800/80 text-slate-300 hover:border-slate-500';
-      });
-      btn.className = 'seniority-btn py-2 text-xs font-medium rounded-lg border border-blue-500/60 bg-blue-600/20 text-blue-400';
+    if (activeKey) {
+      document.getElementById("geminiKeyInput").value = activeKey;
     }
 
-    function generateQuestion() {
-      const role = document.getElementById('roleSelect').value;
-      const list = questionsDatabase[role] || questionsDatabase['Full Stack Engineer'];
-      const q = list[Math.floor(Math.random() * list.length)];
-      
-      document.getElementById('questionCategory').innerText = q.category;
-      document.getElementById('questionTimer').innerText = `${currentSeniority} · ${q.timer}`;
-      document.getElementById('questionTitle').innerText = q.title;
-      document.getElementById('questionHint').innerText = q.hint;
-      window.activeExemplar = q.exemplar;
+    function toggleKeyModal() {
+      const m = document.getElementById("apiKeyModal");
+      m.classList.toggle("hidden");
     }
 
-    function fillSampleResponse() {
-      const role = document.getElementById('roleSelect').value;
-      const list = questionsDatabase[role] || questionsDatabase['Full Stack Engineer'];
-      const exemplar = window.activeExemplar || list[0].exemplar;
-      document.getElementById('answerInput').value = exemplar;
-      updateWordCount();
-    }
-
-    let isRecording = false;
-    function toggleRecording() {
-      isRecording = !isRecording;
-      const btn = document.getElementById('recordBtn');
-      const label = document.getElementById('recordLabel');
-      if (isRecording) {
-        label.innerText = 'Listening (Simulated)...';
-        btn.classList.add('bg-rose-600/30');
-        setTimeout(() => {
-          fillSampleResponse();
-          toggleRecording();
-        }, 2200);
+    function saveKeyFromModal() {
+      const val = document.getElementById("geminiKeyInput").value.trim();
+      activeKey = val;
+      if (val) {
+        localStorage.setItem("GEMINI_KEY", val);
+        document.getElementById("apiKeyStatusText").innerText = "Custom Key: Active";
       } else {
-        label.innerText = 'Simulate Voice Mic';
-        btn.classList.remove('bg-rose-600/30');
+        localStorage.removeItem("GEMINI_KEY");
+        document.getElementById("apiKeyStatusText").innerText = "Vercel Gemini: Active";
+      }
+      toggleKeyModal();
+    }
+
+    async function testKeyInModal() {
+      const val = document.getElementById("geminiKeyInput").value.trim();
+      const msg = document.getElementById("modalTestMsg");
+      msg.innerText = "Pinging Gemini API...";
+      try {
+        const res = await callGeminiAPI("Reply with {\"status\":\"ok\"}", val);
+        msg.innerHTML = "<span class='text-emerald-400 font-bold'>✓ Connection Successful! Model: gemini-2.5-flash</span>";
+      } catch (err) {
+        msg.innerHTML = `<span class='text-rose-400 font-bold'>✕ Connection Failed: ${err.message}</span>`;
       }
     }
 
-    function updateWordCount() {
-      const text = document.getElementById('answerInput').value.trim();
-      const words = text ? text.split(/\s+/).length : 0;
-      document.getElementById('wordCount').innerText = `${words} words`;
+    function setSeniority(lvl, btn) {
+      currentSeniority = lvl;
+      document.querySelectorAll(".sen-btn").forEach(b => {
+        b.className = "sen-btn py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 hover:text-white";
+      });
+      btn.className = "sen-btn py-2 rounded-lg bg-cyan-500/20 border border-cyan-400 text-cyan-300 font-bold";
+      document.getElementById("badgeSeniority").innerText = `${lvl.toUpperCase()} BENCHMARK`;
     }
-    document.getElementById('answerInput').addEventListener('input', updateWordCount);
 
-    function evaluateAnswer() {
-      const answer = document.getElementById('answerInput').value.trim();
-      if (!answer) {
-        alert('Please write or record an answer first!');
+    // Call Gemini 2.5 Flash Endpoint (via Serverless /api/generate or direct)
+    async function callGeminiAPI(promptText, overrideKey = null) {
+      const keyToUse = overrideKey || activeKey;
+      const payload = {
+        contents: [{ parts: [{ text: promptText }] }]
+      };
+
+      // Try local/Vercel serverless proxy first
+      try {
+        const headers = { "Content-Type": "application/json" };
+        if (keyToUse) headers["x-gemini-key"] = keyToUse;
+        const res = await fetch("/api/generate", {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          return data.candidates[0].content.parts[0].text;
+        }
+      } catch (proxyErr) {
+        console.warn("Proxy unavailable, checking direct endpoint:", proxyErr);
+      }
+
+      // If proxy failed and client provided a key, call direct
+      if (keyToUse) {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${keyToUse}`;
+        const directRes = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!directRes.ok) {
+          const err = await directRes.json().catch(() => ({}));
+          throw new Error(err.error?.message || `HTTP ${directRes.status}`);
+        }
+        const data = await directRes.json();
+        return data.candidates[0].content.parts[0].text;
+      }
+
+      throw new Error("Missing Gemini API Key. Open the Key Settings dialog at top right to enter your key.");
+    }
+
+
+    // Generate Adaptive Question via Real Gemini
+    async function generateRealQuestion() {
+      const role = document.getElementById("roleSelect").value;
+      const topic = document.getElementById("topicFocus").value;
+      const resume = document.getElementById("resumeInput").value;
+      const genBtn = document.getElementById("genBtn");
+
+      genBtn.innerHTML = "<i class='fa-solid fa-spinner animate-spin'></i> <span>Consulting Gemini 2.5 Flash...</span>";
+      genBtn.disabled = true;
+
+      const systemPrompt = `You are a Principal Engineering Bar-Raiser interviewer conducting a high-stakes technical interview.
+Role: ${role}
+Seniority: ${currentSeniority}
+${topic ? `Topic Focus: ${topic}` : ""}
+${resume ? `Candidate Resume Context: ${resume}` : ""}
+
+Generate a challenging, realistic, non-cookie-cutter interview question testing real architecture, systems trade-offs, or real-world production incident response.
+Format your answer strictly in valid JSON without backticks or markdown:
+{
+  "category": "SHORT CATEGORY (e.g. DISTRIBUTED CONCURRENCY)",
+  "question": "Full detailed question text",
+  "criteria": "Key criteria to watch for in candidate response",
+  "target_time": "Target time (e.g. 3m 30s)"
+}`;
+
+      try {
+        const raw = await callGeminiAPI(systemPrompt);
+        const cleaned = raw.replace(/```json/gi, '').replace(/```/g, '').trim();
+        const parsed = JSON.parse(cleaned);
+
+        document.getElementById("badgeCategory").innerText = parsed.category || "TECHNICAL ARCHITECTURE";
+        document.getElementById("questionHeading").innerText = parsed.question;
+        document.getElementById("criteriaText").innerText = parsed.criteria;
+        document.getElementById("timerDisplay").innerText = `TARGET: ${parsed.target_time || "4m 00s"}`;
+        
+        // Clear previous answer and result
+        document.getElementById("candidateAnswer").value = "";
+        updateCandidateWordCount();
+        document.getElementById("evalSection").classList.add("hidden");
+      } catch (err) {
+        console.error(err);
+        alert(`Gemini API Error: ${err.message}. Using fallback scenario.`);
+      } finally {
+        genBtn.innerHTML = "<i class='fa-solid fa-microchip'></i> <span>Ask Gemini To Generate Question</span>";
+        genBtn.disabled = false;
+      }
+    }
+
+    // Real Web Speech Recognition
+    function toggleMicrophone() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert("Your browser does not support the Web Speech API. Please use Google Chrome, Edge, or Brave.");
         return;
       }
-      
-      const words = answer.split(/\s+/).length;
-      let tech = Math.min(98, Math.max(78, Math.round(75 + (words / 5))));
-      let star = Math.min(96, Math.max(80, Math.round(78 + (words / 6))));
-      let conf = Math.min(95, Math.max(82, Math.round(82 + (words / 7))));
-      let overall = Math.round((tech * 0.45) + (star * 0.35) + (conf * 0.20));
 
-      document.getElementById('overallScore').innerText = `${overall} / 100`;
-      document.getElementById('techScore').innerText = `${tech}%`;
-      document.getElementById('techBar').style.width = `${tech}%`;
-      document.getElementById('starScore').innerText = `${star}%`;
-      document.getElementById('starBar').style.width = `${star}%`;
-      document.getElementById('confScore').innerText = `${conf}%`;
-      document.getElementById('confBar').style.width = `${conf}%`;
+      if (!recognition) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
 
-      document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
+        recognition.onstart = () => {
+          isListening = true;
+          document.getElementById("speechStatus").innerText = "MIC: RECORDING";
+          document.getElementById("speechStatus").classList.add("text-rose-400");
+          document.getElementById("transcriptionPill").classList.remove("hidden");
+          document.getElementById("micIcon").className = "fa-solid fa-stop";
+          document.getElementById("micLabel").innerText = "Stop Microphone";
+          startAudioVisualizer();
+        };
+
+        recognition.onresult = (e) => {
+          let full = "";
+          for (let i = 0; i < e.results.length; ++i) {
+            full += e.results[i][0].transcript + " ";
+          }
+          document.getElementById("candidateAnswer").value = full.trim();
+          updateCandidateWordCount();
+        };
+
+        recognition.onerror = (e) => {
+          console.error("Speech Recognition Error:", e);
+        };
+
+        recognition.onend = () => {
+          isListening = false;
+          document.getElementById("speechStatus").innerText = "MIC: STANDBY";
+          document.getElementById("speechStatus").classList.remove("text-rose-400");
+          document.getElementById("transcriptionPill").classList.add("hidden");
+          document.getElementById("micIcon").className = "fa-solid fa-microphone";
+          document.getElementById("micLabel").innerText = "Start Voice Mic";
+          stopAudioVisualizer();
+        };
+      }
+
+      if (isListening) {
+        recognition.stop();
+      } else {
+        recognition.start();
+      }
     }
 
-    // Initialize default exemplar
-    window.activeExemplar = questionsDatabase['Full Stack Engineer'][0].exemplar;
+    // Audio Visualizer Canvas
+    async function startAudioVisualizer() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        const source = audioContext.createMediaStreamSource(stream);
+        source.connect(analyser);
+        analyser.fftSize = 64;
+
+        const canvas = document.getElementById("audioVisualizer");
+        const ctx = canvas.getContext("2d");
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        function draw() {
+          animId = requestAnimationFrame(draw);
+          analyser.getByteFrequencyData(dataArray);
+
+          ctx.fillStyle = "#030712";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          const barWidth = (canvas.width / bufferLength) * 1.5;
+          let x = 0;
+
+          for (let i = 0; i < bufferLength; i++) {
+            const barHeight = (dataArray[i] / 255) * canvas.height;
+            const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
+            gradient.addColorStop(0, '#06b6d4');
+            gradient.addColorStop(1, '#10b981');
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+            x += barWidth + 2;
+          }
+        }
+        draw();
+      } catch (err) {
+        console.warn("Visualizer mic access denied, using simulated bars:", err);
+      }
+    }
+
+    function stopAudioVisualizer() {
+      if (animId) cancelAnimationFrame(animId);
+      if (audioContext) audioContext.close();
+    }
+
+    function updateCandidateWordCount() {
+      const text = document.getElementById("candidateAnswer").value.trim();
+      const count = text ? text.split(/\s+/).length : 0;
+      document.getElementById("candidateWordCount").innerText = `${count} words`;
+    }
+    document.getElementById("candidateAnswer").addEventListener("input", updateCandidateWordCount);
+
+    function fillStaffExemplar() {
+      document.getElementById("candidateAnswer").value = `To serve 100,000 concurrent video viewers without memory exhaustion, we must eliminate memory buffering by relying strictly on asynchronous streaming pipelines and edge CDN distribution.
+
+1. Architecture & Streaming Pipeline:
+In our Node.js streaming service, we parse the HTTP Range request header (e.g. Range: bytes=1048576-2097151). We calculate the exact offset and invoke fs.createReadStream(path, { start, end, highWaterMark: 64 * 1024 }). We respond with HTTP 206 Partial Content, returning Content-Range: bytes \${start}-\${end}/\${totalSize} and Content-Length. The read stream is piped directly into the HTTP response stream. This guarantees that each client connection consumes only ~64KB of RAM regardless of a 5GB video file size.
+
+2. Caching & Edge Offload:
+At 100k scale, direct disk reads would saturate NVMe IOPS. We front the streaming service with Cloudflare / CloudFront CDN with cache-control: public, max-age=86400, stale-while-revalidate=3600. Initial video chunks (first 2MB) are primed in edge cache, absorbing 95% of egress traffic.
+
+3. Backpressure & Failure Handling:
+If a slow 3G mobile client cannot keep up with transmission, Node.js streams automatically pause the source read stream via the backpressure mechanism until the drain event fires, preventing buffer bloat in RAM.`;
+      updateCandidateWordCount();
+    }
+
+    // Evaluate Candidate Answer via Real Gemini 2.5 Flash
+    async function evaluateWithGemini() {
+      const question = document.getElementById("questionHeading").innerText;
+      const answer = document.getElementById("candidateAnswer").value.trim();
+      const role = document.getElementById("roleSelect").value;
+      const evalBtn = document.getElementById("evalBtn");
+
+      if (!answer) {
+        alert("Please speak or write your technical answer before evaluating!");
+        return;
+      }
+
+      evalBtn.innerHTML = "<i class='fa-solid fa-spinner animate-spin'></i> <span>Analyzing Rubric with Gemini...</span>";
+      evalBtn.disabled = true;
+
+      const evalPrompt = `You are a Principal Bar-Raiser Interviewer at a Tier-1 tech company.
+Interview Context:
+- Target Role: ${role}
+- Seniority: ${currentSeniority}
+- Question Asked: "${question}"
+
+Candidate's Actual Response:
+"${answer}"
+
+Evaluate the candidate's exact words with complete technical rigor.
+Return valid JSON ONLY (do not use markdown quotes or backticks):
+{
+  "overall_score": 92,
+  "technical_depth": 94,
+  "star_structure": 90,
+  "clarity_edge_cases": 88,
+  "tier_verdict": "STRONG HIRE / HIRE / LEANING NO / NO HIRE",
+  "strengths": [
+    "Specific technical strength 1",
+    "Specific technical strength 2",
+    "Specific technical strength 3"
+  ],
+  "improvements": [
+    "Specific missing architectural trade-off or gap 1",
+    "Specific edge case they neglected 2"
+  ],
+  "exemplar_synthesis": "A concise 2-sentence summary of how a staff engineer would crystallize this answer."
+}`;
+
+      try {
+        const raw = await callGeminiAPI(evalPrompt);
+        const cleaned = raw.replace(/```json/gi, '').replace(/```/g, '').trim();
+        const res = JSON.parse(cleaned);
+
+        document.getElementById("evalTimestamp").innerText = new Date().toLocaleTimeString();
+        document.getElementById("resOverallScore").innerHTML = `${res.overall_score}<span class="text-base text-slate-400">/100</span>`;
+        document.getElementById("resTier").innerText = res.tier_verdict || "STRONG HIRE";
+
+        document.getElementById("resTechScore").innerText = `${res.technical_depth}%`;
+        document.getElementById("barTech").style.width = `${res.technical_depth}%`;
+
+        document.getElementById("resStarScore").innerText = `${res.star_structure}%`;
+        document.getElementById("barStar").style.width = `${res.star_structure}%`;
+
+        document.getElementById("resClarityScore").innerText = `${res.clarity_edge_cases}%`;
+        document.getElementById("barClarity").style.width = `${res.clarity_edge_cases}%`;
+
+        // Render Strengths
+        const strengthsList = document.getElementById("resStrengths");
+        strengthsList.innerHTML = (res.strengths || []).map(s => `<li>${s}</li>`).join("");
+
+        // Render Improvements
+        const improveList = document.getElementById("resImprovements");
+        improveList.innerHTML = (res.improvements || []).map(i => `<li>${i}</li>`).join("");
+
+        // Render Exemplar
+        document.getElementById("resExemplar").innerText = res.exemplar_synthesis || "";
+
+        const sec = document.getElementById("evalSection");
+        sec.classList.remove("hidden");
+        sec.scrollIntoView({ behavior: "smooth" });
+      } catch (err) {
+        console.error(err);
+        alert(`Evaluation error: ${err.message}`);
+      } finally {
+        evalBtn.innerHTML = "<i class='fa-solid fa-gauge-high'></i> <span>Run Real Gemini Evaluation</span>";
+        evalBtn.disabled = false;
+      }
+    }
   </script>
 </body>
 </html>
